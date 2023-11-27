@@ -1,0 +1,13 @@
+Common Table Expression command to locate most rented category of films within the database:
+
+WITH films_rented AS (SELECT A.film_id,
+		A.title,
+ 		A.rental_duration,
+		E.name AS category
+ FROM film A
+ INNER JOIN inventory B ON A.film_id = B.film_id
+ INNER JOIN rental C ON B.inventory_id = C.inventory_id
+ INNER JOIN film_category D ON A.film_id = D.film_id
+ INNER JOIN category E ON D.category_id = E.category_id)
+ SELECT MODE() WITHIN GROUP (ORDER BY category) AS mode_category
+ FROM films_rented
