@@ -1,0 +1,8 @@
+Subquery SQL command to identify and calculate the average amount each customer spends.
+
+SELECT AVG(total_spent) AS average_spent
+FROM (SELECT A.customer_id, A.first_name, A.last_name,
+	   SUM(B.amount) AS total_spent
+FROM customer A
+LEFT JOIN payment B ON A.customer_id = B.customer_id
+GROUP BY A.customer_id)
